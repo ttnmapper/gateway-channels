@@ -7,7 +7,7 @@ COPY . ./
 # Building using -mod=vendor, which will utilize the v
 #RUN go get
 #RUN go mod vendor
-RUN CGO_ENABLED=0 GOOS=linux go build -v -mod=vendor -o app
+RUN CGO_ENABLED=0 GOOS=linux go build -v -mod=vendor -o gateway-channels
 
 #FROM alpine:3.8
 FROM scratch
@@ -16,7 +16,7 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 WORKDIR /root/
 
-COPY --from=builder /go-modules/app .
+COPY --from=builder /go-modules/gateway-channels .
 COPY conf.json .
 
-CMD ["./app"]
+CMD ["./gateway-channels"]
