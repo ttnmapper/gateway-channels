@@ -29,9 +29,6 @@ func processRawPackets() {
 			gateway.Longitude = 0
 			gateway.Altitude = 0
 
-			// Packet broker metadata will provide network id. For now assume TTN
-			gateway.NetworkId = "thethingsnetwork.org"
-
 			updateGateway(message, gateway)
 		}
 	}
@@ -135,6 +132,7 @@ func setAntennaFrequencyDb(antennaID uint, frequencyID uint) {
 
 		db.Exec("UPDATE orders SET shipped_at=? WHERE id IN (?)", time.Now(), []int64{11,22,33})
 	*/
+	// Need to use a raw query because... ???
 	query := "INSERT INTO antenna_frequencies (antenna_id, frequency_id, count, last_heard) " +
 		"VALUES (?, ?, 1, NOW()) " +
 		"ON CONFLICT (antenna_id, frequency_id) DO " +
